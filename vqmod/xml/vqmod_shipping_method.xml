@@ -12,7 +12,7 @@
            <add><![CDATA[
            <input type="button" id="loadButton" value="Open Shipping manager" onclick="loadShippingManager();" />
             <div id="shippingManager" style="display: none;">
-                <iframe width="800px" height="535px" style="border: none;" frameBorder="0" />asdfasdfdas
+                <iframe width="800px" height="535px" style="border: none;" frameBorder="0" />
             </div>
            ]]></add>
        </operation>
