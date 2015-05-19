@@ -4,7 +4,7 @@ $_['heading_title']                = 'BPost';
 
 // Text
 $_['text_shipping']                = 'Shipping';
-$_['text_success']                 = 'Success: You have modified UPS shipping!';
+$_['text_success']                 = 'Success: You have modified BPost shipping!';
 $_['text_edit']                    = 'Edit BPost Shipping';
 $_['text_regular_daily_pickup']    = 'Regular Daily Pickup';
 $_['text_daily_pickup']            = 'Daily Pickup';

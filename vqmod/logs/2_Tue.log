@@ -13,3 +13,33 @@ VQModObject::applyMod - SEARCH NOT FOUND (ABORTING MOD): <h2 style="display: non
 ----------------------------------------------------------------------
 
 
+---------- Date: 2015-05-19 11:04:56 ~ IP : ::1 ----------
+REQUEST URI : /opencart/index.php?route=checkout/shipping_method
+MOD DETAILS:
+   modFile   : C:\xampp\htdocs\opencart\vqmod/xml/vqmod_shipping_method.xml
+   id        : Replace the css property in heading title in Shipping method step
+   version   : 1.0
+   vqmver    : 2.X
+   author    : Tuts+
+
+File Name    : catalog/view/theme/default/template/checkout/shipping_method.tpl(0)
+VQModObject::applyMod - SEARCH NOT FOUND (ABORTING MOD): <strong>BPost</strong>
+
+----------------------------------------------------------------------
+
+
+---------- Date: 2015-05-19 12:16:07 ~ IP : ::1 ----------
+REQUEST URI : /opencart/index.php?route=checkout/checkout
+MOD DETAILS:
+   modFile   : C:\xampp\htdocs\opencart\vqmod/xml/vqmod_header_controller.xml
+   id        : Replace the css property in heading title in Shipping method step
+   version   : 1.0
+   vqmver    : 2.X
+   author    : Tuts+
+
+File Name    : catalog/controller/common/header.php(0)
+VQModObject::applyMod - SEARCH NOT FOUND (ABORTING MOD): $data['scripts'] = $this->document->getStyles();
+
+----------------------------------------------------------------------
+
+

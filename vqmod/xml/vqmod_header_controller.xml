@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+    <id>Replace the css property in heading title in Shipping method step</id>
+    <version>1.0</version>
+    <vqmver>2.X</vqmver>
+    <author>Tuts+</author>
+    <file name="catalog/controller/common/header.php">
+        <operation info="Replace the css property in heading title in Shipping method step">
+            <search position="replace"><![CDATA[
+                $data['styles'] = $this->document->getStyles();
+            ]]></search>
+            <add><![CDATA[
+                $this->document->addStyle('catalog/view/theme/default/stylesheet/custom-theme/jquery-ui-1.8.17.custom.css');
+                $data['styles'] = $this->document->getStyles();
+                $this->document->addScript('catalog/view/javascript/jquery/jquery-ui-1.8.17.custom.min.js');
+                $this->document->addScript('catalog/view/javascript/scripts.js');
+                $data['scripts'] = $this->document->getScripts();
+            ]]></add>
+        </operation>
+    </file>
+</modification>
