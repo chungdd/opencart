@@ -1,0 +1,15 @@
+---------- Date: 2015-05-19 04:50:17 ~ IP : ::1 ----------
+REQUEST URI : /opencart/
+MOD DETAILS:
+   modFile   : C:\xampp\htdocs\opencart\vqmod/xml/vqmod_homepage.xml
+   id        : Replace the css property in heading title in Home page
+   version   : 1.0
+   vqmver    : 2.X
+   author    : Tuts+
+
+File Name    : catalog/view/theme/default/template/common/home.tpl(0)
+VQModObject::applyMod - SEARCH NOT FOUND (ABORTING MOD): <h2 style="display: none;">
+
+----------------------------------------------------------------------
+
+
