@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+    <id>Replace the css property in heading title in Shipping method step</id>
+    <version>1.0</version>
+    <vqmver>2.X</vqmver>
+    <author>Tuts+</author>
+    <file name="catalog/controller/checkout/checkout.php">
+        <operation info="Replace the css property in heading title in Shipping method step">
+            <search position="replace"><![CDATA[
+                $data['header'] = $this->load->controller('common/header');
+            ]]></search>
+            <add><![CDATA[
+                $data['header']      = $this->load->controller('common/header');
+                $data['total_price'] = $this->cart->getTotal() * 100;
+                $prods               = array();
+                
+                foreach ($products as $k => $v) {
+                    $prods[] = array(
+                        'name'     => $v['name'],
+                        'quantity' => $v['quantity']
+                    );
+                }
+                
+                $data['prods'] = json_encode($prods);
+                
+                if ($data['logged']) {
+                    $cus                = $this->customer->session->data['shipping_address'];
+                    $data['first_name'] = $cus['firstname'];
+                    $data['last_name']  = $cus['lastname'];
+                    $data['company']    = $cus['company'];
+                    $data['address']    = $cus['address_1'];
+                    $data['city']       = $cus['city'];
+                    $data['email']      = $this->customer->getEmail();
+                    $data['phone']      = $this->customer->getTelephone();
+                }
+            ]]></add>
+        </operation>
+    </file>
+</modification>

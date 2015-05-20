@@ -12,6 +12,11 @@
                 passInputValue('customerCity', 'city');
                 passInputValue('customerEmail', 'email');
                 passInputValue('customerPhoneNumber', 'phone');
+                passInputValue('orderTotalPrice', 'total_price');
+                
+                //var a = getUrlParameter('prods');
+                //var b = $.parseJSON((a.toString()));
+                //console.log(b);return;
                 
                 $("#dataForm").submit();
     		});
@@ -26,7 +31,8 @@
                 for (var i = 0; i < sURLVariables.length; i++) {
                     var sParameterName = sURLVariables[i].split('=');
                     if (sParameterName[0] == sParam) {
-                        return sParameterName[1];
+                        var result = sParameterName[1].replace(/%20/g, ' ').replace(/%22/g, '\'').replace(/\{'/g, '{').replace(/':/g, ':').replace(/,'/g, ',');
+                        return result;
                     }
                 }
             }      
@@ -47,7 +53,7 @@
             <input type="hidden" name="accountId" value="<?php echo $accountId; ?>"/>
             <input type="hidden" name="action" value="START"/>
             <input type="hidden" name="orderReference" value="<?php echo $orderReference; ?>"/>
-            <input type="hidden" name="orderTotalPrice" value="13500"/>
+            <input type="hidden" name="orderTotalPrice" value=""/>
             <input type="hidden" name="customerFirstName" value=""/>
             <input type="hidden" id="orderWeight" name="orderWeight" value="4500" />
             <input type="hidden" id="confirmUrl" name="confirmUrl" value="<?php echo $returnURL; ?>" />

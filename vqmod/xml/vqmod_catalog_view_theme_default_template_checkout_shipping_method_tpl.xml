@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+   <id>Replace the css property in heading title in Shipping method step</id>
+   <version>1.0</version>
+   <vqmver>2.X</vqmver>
+   <author>Tuts+</author>
+   <file name="catalog/view/theme/default/template/checkout/shipping_method.tpl">
+       <operation info="Replace the css property in heading title in Shipping method step">
+           <search position="top"><![CDATA[
+           <div class="radio">
+           ]]></search>
+           <add><![CDATA[
+           <input type="button" id="loadButton" value="Open Shipping manager" onclick="loadShippingManager();" />
+            <div id="shippingManager" style="display: none;">
+                <iframe width="800px" height="535px" style="border: none;" frameBorder="0" />
+            </div>
+           ]]></add>
+       </operation>
+   </file>
+</modification>
