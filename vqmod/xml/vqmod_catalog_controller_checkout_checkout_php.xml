@@ -32,6 +32,8 @@
                     $data['city']       = $cus['city'];
                     $data['email']      = $this->customer->getEmail();
                     $data['phone']      = $this->customer->getTelephone();
+                } else {
+                    $data['first_name'] = $data['last_name'] = $data['company'] = $data['address'] = $data['city'] = $data['email'] = $data['phone'] = '';
                 }
             ]]></add>
         </operation>

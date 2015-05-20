@@ -59,7 +59,7 @@ function get_input_value(elm, get_by, elm_type) {
         var obj = '#' + elm;
     }
     
-    return $(obj).val();
+    return $(obj).val() ? $(obj).val() : '';
 }
 
 function closeShippingManager() {				
@@ -68,6 +68,6 @@ function closeShippingManager() {
 	$("#shippingManager").find("iframe").attr("src", "");
 	
 	// do something useful, depending on the shop				
-	$("#loadButton").after("<div id=\"result\" style=\"margin-top: 15px;\">This is the result of the shipping manager</div>");
-	$("#showResult").show();
+	//$("#loadButton").after("<div id=\"result\" style=\"margin-top: 15px;\">This is the result of the shipping manager</div>");
+	//$("#showResult").show();
 }

@@ -45,6 +45,7 @@
         	$passphrase = 'DEMO_SHM';
         	$orderReference = rand(100,999);
         	$returnURL = 'http://localhost/opencart/closeShippingManager.php';
+        	//$returnURL = 'http://localhost/opencart/index.php?route=checkout/checkout';
         ?>	
 			
         <form style="display: none" id="dataForm" method="POST" action="https://shippingmanager.bpost.be/ShmFrontEnd/start">
@@ -57,6 +58,7 @@
             <input type="hidden" name="customerFirstName" value=""/>
             <input type="hidden" id="orderWeight" name="orderWeight" value="4500" />
             <input type="hidden" id="confirmUrl" name="confirmUrl" value="<?php echo $returnURL; ?>" />
+            <input type="hidden" id="cancelUrl" name="cancelUrl" value="<?php echo $returnURL; ?>" />
             <!--<input type="hidden" name="deliveryMethodOverrides" value="bpack BUSINESS|VISIBLE|0" />
             <input type="hidden" name="deliveryMethodOverrides" value="Parcels depot|VISIBLE" />
             <input type="hidden" name="deliveryMethodOverrides" value="Pugo|VISIBLE" />
