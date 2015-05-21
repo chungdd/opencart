@@ -26,12 +26,12 @@
             }
             
             function getUrlParameter(sParam) {
-                var sPageURL = window.location.search.substring(1);
-                var sURLVariables = sPageURL.split('&');
+                var sPageURL = window.location.search.substring(1),
+                    sURLVariables = sPageURL.split('&');
                 for (var i = 0; i < sURLVariables.length; i++) {
                     var sParameterName = sURLVariables[i].split('=');
                     if (sParameterName[0] == sParam) {
-                        var result = sParameterName[1].replace(/%20/g, ' ').replace(/%22/g, '\'').replace(/\{'/g, '{').replace(/':/g, ':').replace(/,'/g, ',');
+                        var result = sParameterName[1].replace(/%20/g, ' ').replace(/%22/g, '\'');
                         return result;
                     }
                 }
@@ -41,10 +41,10 @@
     	
 	<body>
         <?php
-        	$accountId = '107413';
-        	$passphrase = 'DEMO_SHM';
-        	$orderReference = rand(100,999);
-        	$returnURL = 'http://localhost/opencart/closeShippingManager.php';
+        	$accountId      = '107413';
+        	$passphrase     = 'DEMO_SHM';
+        	$orderReference = date('YmdHi', time());
+        	$returnURL      = 'http://localhost/opencart/closeShippingManager.php';
         	//$returnURL = 'http://localhost/opencart/index.php?route=checkout/checkout';
         ?>	
 			

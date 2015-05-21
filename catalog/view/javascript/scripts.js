@@ -6,6 +6,7 @@ $(function() {
 		open: function(event, ui){$("body").css("overflow","hidden");$(".ui-widget-overlay").css("width","100%"); },
 		close: function(event, ui){$("body").css("overflow","auto"); } 				
 	});*/
+    //console.log($('input[value="bpost.bpost"]').html());return;
 });
 
 function loadShippingManager() {
@@ -42,11 +43,11 @@ function loadShippingManager() {
     //params += '&prods=' + get_input_value('prods', 'name', 'textarea');
     
     
-	$("#shippingManager").find("iframe").attr("src", "loadShippingManager.php" + params);
-	$("#result").remove();
+	$('#shippingManager').find('iframe').attr('src', 'loadShippingManager.php' + params);
+	$('#result').remove();
     
 	// open the popup
-	$("#shippingManager").dialog({width: 835, height: 600, draggable: false, resizable: false});
+	$('#shippingManager').dialog({width: 835, height: 600, draggable: false, resizable: false});
     				
 }
 
@@ -62,10 +63,26 @@ function get_input_value(elm, get_by, elm_type) {
     return $(obj).val() ? $(obj).val() : '';
 }
 
-function closeShippingManager() {				
-	// close the popup				
-	$("#shippingManager").dialog("close");				
-	$("#shippingManager").find("iframe").attr("src", "");
+function closeShippingManager(total_price, shipping_fee) {
+    $.ajax({
+		url: 'index.php?route=checkout/shipping_method/update_ss',
+		type: 'post',
+		data: {total_price: total_price, shipping_fee: shipping_fee},
+		//dataType: 'json',
+
+		success: function() {
+            alert('ok');
+		},
+        
+        error: function() {
+            alert('error');
+        }
+	});
+	// close the popup
+	$('#shippingManager').dialog('close');				
+	$('#shippingManager').find('iframe').attr('src', '');
+    //console.log($('input[name="orderTotalPrice"]').val() + '<br />');
+    //console.log($('input[name="deliveryMethodPriceTotal"]').val());
 	
 	// do something useful, depending on the shop				
 	//$("#loadButton").after("<div id=\"result\" style=\"margin-top: 15px;\">This is the result of the shipping manager</div>");
