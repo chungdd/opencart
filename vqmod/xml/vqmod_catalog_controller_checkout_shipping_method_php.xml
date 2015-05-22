@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+    <id>Replace the css property in heading title in Shipping method step</id>
+    <version>1.0</version>
+    <vqmver>2.X</vqmver>
+    <author>Tuts+</author>
+    <file name="catalog/controller/checkout/shipping_method.php">
+        <operation info="Replace the css property in heading title in Shipping method step">
+            <search position="replace"><![CDATA[
+                class ControllerCheckoutShippingMethod extends Controller {
+            ]]></search>
+            <add><![CDATA[
+                class ControllerCheckoutShippingMethod extends Controller {
+                    public function update_ss() {
+                        $this->session->data['custom_bpost']                        = 1;
+                            $this->session->data['shipping_method']['cost']         = $_POST['shipping_fee'] / 100;
+                            $this->session->data['shipping_method']['tax_class_id'] = '';
+                            $this->session->data['shipping_method']['title']        = 'BPost';
+                    }
+            ]]></add>
+        </operation>
+        
+        <operation info="Replace the css property in heading title in Shipping method step">
+            <search position="replace"><![CDATA[
+                $this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
+            ]]></search>
+            <add><![CDATA[
+                if (isset($this->session->data['custom_bpost']) && $this->session->data['custom_bpost'] == 0) {
+                    $this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
+                } elseif (isset($this->session->data['custom_bpost']) && $this->session->data['custom_bpost'] == 1) {
+                    $this->session->data['custom_bpost'] = 0;
+                }
+            ]]></add>
+        </operation>
+    </file>
+</modification>

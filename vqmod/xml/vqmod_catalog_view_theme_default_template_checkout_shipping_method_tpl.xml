@@ -1,20 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <modification>
-   <id>Replace the css property in heading title in Shipping method step</id>
-   <version>1.0</version>
-   <vqmver>2.X</vqmver>
-   <author>Tuts+</author>
-   <file name="catalog/view/theme/default/template/checkout/shipping_method.tpl">
-       <operation info="Replace the css property in heading title in Shipping method step">
-           <search position="top"><![CDATA[
-           <div class="radio">
-           ]]></search>
-           <add><![CDATA[
-           <input type="button" id="loadButton" value="Open Shipping manager" onclick="loadShippingManager();" />
-            <div id="shippingManager" style="display: none;">
-                <iframe width="800px" height="535px" style="border: none;" frameBorder="0" />
-            </div>
-           ]]></add>
+    <id>Replace the css property in heading title in Shipping method step</id>
+    <version>1.0</version>
+    <vqmver>2.X</vqmver>
+    <author>Tuts+</author>
+    <file name="catalog/view/theme/default/template/checkout/shipping_method.tpl">
+        <operation info="1">
+            <search position="top"><![CDATA[
+                <div class="radio">
+            ]]></search>
+            <add><![CDATA[
+                <div id="shippingManager" style="display: none;">
+                    <iframe width="800px" height="535px" style="border: none;" frameBorder="0" />
+                </div>
+                
+                <form name="returnForm" method="post" action="">
+                    <input type="hidden" name="orderTotalPrice" value=""/>
+    				<input type="hidden" name="deliveryMethodPriceTotal" value=""/>
+    			</form>
+            ]]></add>
        </operation>
-   </file>
+       
+        <operation info="2">
+            <search position="replace"><![CDATA[
+                checked="checked"
+            ]]></search>
+            <add><![CDATA[
+                
+            ]]></add>
+        </operation>
+        
+        <operation info="3">
+            <search position="replace"><![CDATA[
+                value="<?php echo $quote['code']; ?>"
+            ]]></search>
+            <add><![CDATA[
+                value="<?php echo $quote['code']; ?>" <?php echo $quote['code'] == 'bpost.bpost' ? 'onClick="loadShippingManager();"' : ''; ?>
+            ]]></add>
+        </operation>
+    </file>
 </modification>
