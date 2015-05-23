@@ -1,6 +1,8 @@
 <?php
 // Heading
 $_['heading_title']                = 'BPost';
+$_['account_id']                   = 'Account ID';
+$_['passphrase']                   = 'Passphrase';
 
 // Text
 $_['text_shipping']                = 'Shipping';

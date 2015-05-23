@@ -40,6 +40,8 @@ function loadShippingManager() {
     params += '&email=' + email;
     params += '&phone=' + phone;
     params += '&total_price=' + get_input_value('total_price', 'name');
+    params += '&bpost_account_id=' + get_input_value('bpost_account_id', 'name');
+    params += '&bpost_passphrase=' + get_input_value('bpost_passphrase', 'name');
     //params += '&prods=' + get_input_value('prods', 'name', 'textarea');
     
     

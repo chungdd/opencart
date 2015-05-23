@@ -26,6 +26,20 @@
       <div class="panel-body">
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-ups" class="form-horizontal">
           <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-account-id"><?php echo $account_id; ?></label>
+            <div class="col-sm-10">
+              <input type="text" name="bpost_account_id" value="<?php echo $bpost_account_id; ?>" placeholder="<?php echo $account_id; ?>" id="input-account-id" class="form-control" />
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-passphrase"><?php echo $passphrase; ?></label>
+            <div class="col-sm-10">
+              <input type="text" name="bpost_passphrase" value="<?php echo $bpost_passphrase; ?>" placeholder="<?php echo $passphrase; ?>" id="input-passphrase" class="form-control" />
+            </div>
+          </div>
+          
+          <div class="form-group">
             <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
             <div class="col-sm-10">
               <select name="bpost_status" id="input-status" class="form-control">

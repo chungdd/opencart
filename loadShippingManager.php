@@ -41,11 +41,15 @@
     	
 	<body>
         <?php
-        	$accountId      = '107413';
-        	$passphrase     = 'DEMO_SHM';
+            require_once 'config.php';
+            $get            = $_GET;
+        	$accountId      = $get['bpost_account_id'];
+        	//$accountId      = '107413';
+        	$passphrase     = $get['bpost_passphrase'];
+        	//$passphrase     = 'DEMO_SHM';
         	$orderReference = date('YmdHi', time());
-        	$returnURL      = 'http://localhost/opencart/closeShippingManager.php';
-        	//$returnURL = 'http://localhost/opencart/index.php?route=checkout/checkout';
+        	$returnURL      = HTTP_SERVER . 'closeShippingManager.php';
+        	//$returnURL      = 'localhost/opencart/closeShippingManager.php';
         ?>	
 			
         <form style="display: none" id="dataForm" method="POST" action="https://shippingmanager.bpost.be/ShmFrontEnd/start">

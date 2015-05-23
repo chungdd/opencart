@@ -24,6 +24,9 @@
                     echo '<input type="hidden" name="c_city" value="' . $city . '" />';
                     echo '<input type="hidden" name="c_email" value="' . $email . '" />';
                     echo '<input type="hidden" name="c_phone" value="' . $phone . '" />';
+                    
+                    if (isset($bpost_account_id)) echo $bpost_account_id;
+                    if (isset($bpost_passphrase)) echo $bpost_passphrase;
                 ?>
             ]]></add>
         </operation>

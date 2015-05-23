@@ -21,7 +21,9 @@
                     );
                 }
                 
-                $data['prods'] = json_encode($prods);
+                $data['prods']            = json_encode($prods);
+                $data['bpost_account_id'] = '<input type="hidden" name="bpost_account_id" value="' . $this->config->get('bpost_account_id') . '" />';
+                $data['bpost_passphrase'] = '<input type="hidden" name="bpost_passphrase" value="' . $this->config->get('bpost_passphrase') . '" />';
                 
                 if ($data['logged']) {
                     $cus                = $this->customer->session->data['shipping_address'];
