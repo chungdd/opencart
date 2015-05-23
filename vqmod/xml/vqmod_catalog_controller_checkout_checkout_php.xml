@@ -11,7 +11,7 @@
             ]]></search>
             <add><![CDATA[
                 $data['header']      = $this->load->controller('common/header');
-                $data['total_price'] = $this->cart->getTotal() * 100;
+                $data['total_price'] = number_format($this->cart->getTotal() * 100,0,'','');
                 $prods               = array();
                 
                 foreach ($products as $k => $v) {

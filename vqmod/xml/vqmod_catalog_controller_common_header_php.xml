@@ -12,8 +12,9 @@
             <add><![CDATA[
                 $this->document->addStyle('catalog/view/theme/default/stylesheet/custom-theme/jquery-ui-1.8.17.custom.css');
                 $data['styles'] = $this->document->getStyles();
-                $this->document->addScript('catalog/view/javascript/jquery/jquery-ui-1.8.17.custom.min.js');
                 $this->document->addScript('catalog/view/javascript/scripts.js');
+
+                //<script type="text/javascript" src="catalog/view/javascript/bootstrap/js/bootstrap.min.js"></script>
                 $data['scripts'] = $this->document->getScripts();
             ]]></add>
         </operation>

@@ -63,11 +63,11 @@ function get_input_value(elm, get_by, elm_type) {
     return $(obj).val() ? $(obj).val() : '';
 }
 
-function closeShippingManager(total_price, shipping_fee) {
+function closeShippingManager(total_price, shipping_fee,orderReference) {
     $.ajax({
 		url: 'index.php?route=checkout/shipping_method/update_ss',
 		type: 'post',
-		data: {total_price: total_price, shipping_fee: shipping_fee},
+		data: {total_price: total_price, shipping_fee: shipping_fee,reference: orderReference},
 		//dataType: 'json',
 
 		success: function() {
