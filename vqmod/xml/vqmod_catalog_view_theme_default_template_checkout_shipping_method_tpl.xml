@@ -38,5 +38,13 @@
                 value="<?php echo $quote['code']; ?>" <?php echo $quote['code'] == 'bpost.bpost' ? 'onClick="loadShippingManager();"' : ''; ?>
             ]]></add>
         </operation>
+        <operation info="3">
+            <search position="replace"><![CDATA[
+                <?php echo $quote['title']; ?> - <?php echo $quote['text']; ?></label>
+            ]]></search>
+            <add><![CDATA[
+                <?php echo $quote['title']; ?><?php if($quote['code'] != 'bpost.bpost'){ ?> - <?php echo $quote['text']; ?><?php } ?></label>
+            ]]></add>
+        </operation>
     </file>
 </modification>

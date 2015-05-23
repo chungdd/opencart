@@ -14,7 +14,7 @@
                     public function update_ss() {
                         $this->session->data['custom_bpost']                        = 1;
                             $this->session->data['shipping_method']['cost']         = $_POST['shipping_fee'] / 100;
-                            $this->session->data['bpost_reference']                       = $_POST['reference'];
+                            $this->session->data['bpost_reference']                 = $_POST['reference'];
                             $this->session->data['shipping_method']['tax_class_id'] = '';
                             $this->session->data['shipping_method']['title']        = 'BPost';
                     }

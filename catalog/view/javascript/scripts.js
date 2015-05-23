@@ -49,7 +49,15 @@ function loadShippingManager() {
 	$('#result').remove();
     
 	// open the popup
-	$('#shippingManager').dialog({width: 835, height: 600, draggable: false, resizable: false});
+	$('#shippingManager').dialog({
+        width: 835,
+        height: 600,
+        draggable: false,
+        resizable: false,
+        close: function( event, ui ) {
+            $("input[value='bpost.bpost']").prop('checked', false);
+        }
+    });
     				
 }
 
@@ -66,22 +74,27 @@ function get_input_value(elm, get_by, elm_type) {
 }
 
 function closeShippingManager(total_price, shipping_fee,orderReference) {
-    $.ajax({
-		url: 'index.php?route=checkout/shipping_method/update_ss',
-		type: 'post',
-		data: {total_price: total_price, shipping_fee: shipping_fee,reference: orderReference},
-		//dataType: 'json',
+    if(orderReference == 0){
+        $("input[value='bpost.bpost']").prop('checked', false);
+    }
+    else{
+        $.ajax({
+            url: 'index.php?route=checkout/shipping_method/update_ss',
+            type: 'post',
+            data: {total_price: total_price, shipping_fee: shipping_fee,reference: orderReference},
+            //dataType: 'json',
 
-		success: function() {
-            alert('ok');
-		},
-        
-        error: function() {
-            alert('error');
-        }
-	});
+            success: function() {
+                $("input[value='bpost.bpost']").parent().append(' - $'+(shipping_fee/100));
+            },
+
+            error: function() {
+                $("input[value='bpost.bpost']").prop('checked', false);
+            }
+        });
+    }
 	// close the popup
-	$('#shippingManager').dialog('close');				
+	$('#shippingManager').dialog('close');
 	$('#shippingManager').find('iframe').attr('src', '');
     //console.log($('input[name="orderTotalPrice"]').val() + '<br />');
     //console.log($('input[name="deliveryMethodPriceTotal"]').val());
