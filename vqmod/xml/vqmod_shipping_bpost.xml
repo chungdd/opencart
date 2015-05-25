@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+    <id>Replace the css property in heading title in Shipping method step</id>
+    <version>1.0</version>
+    <vqmver>2.X</vqmver>
+    <author>Tuts+</author>
+    <file name="catalog/controller/common/header.php">
+        <operation info="Replace the css property in heading title in Shipping method step">
+            <search position="replace"><![CDATA[
+                $data['styles'] = $this->document->getStyles();
+            ]]></search>
+            <add><![CDATA[
+                $this->document->addStyle('catalog/view/theme/default/stylesheet/custom-theme/jquery-ui-1.8.17.custom.css');
+                $data['styles'] = $this->document->getStyles();
+                $this->document->addScript('catalog/view/javascript/bpost/scripts.js');
+
+                //<script type="text/javascript" src="catalog/view/javascript/bootstrap/js/bootstrap.min.js"></script>
+                $data['scripts'] = $this->document->getScripts();
+            ]]></add>
+        </operation>
+    </file>
+    
+    
+    
+    <file name="catalog/controller/api/order.php">
+        <operation info="Replace the css property in heading title in Shipping method step">
+            <search position="replace"><![CDATA[
+                public function delete() {
+            ]]></search>
+            <add><![CDATA[
+                function updateBpostOrder($order_id, $order_status_id){
+                    $status_arr = array(
+                        9   => 'OPEN',
+                        2   => 'OPEN',
+                        1   => 'PENDING',
+                        7   => 'CANCELLED',
+                        11  => 'CANCELLED',
+                        12  => 'CANCELLED',
+                        8   => 'CANCELLED',
+                        14  => 'CANCELLED',
+                        10  => 'CANCELLED',
+                        13  => 'CANCELLED',
+                        5   => 'OPEN',
+                        15  => 'OPEN',
+                        13  => 'OPEN',
+                        16  => 'OPEN',
+                        1   => 'ON-HOLD'
+                    );
+                    $ch = curl_init();
+                    $bpost_id = $this->model_checkout_order->getBpostOrder($order_id);
+
+                    if($bpost_id){
+                        $webserviceUrl = 'https://api.bpost.be/services/shm/107413/orders/status';
+                        $data = '<orderStatusMap xmlns="http://schema.post.be/shm/deepintegration/v2/">
+                                  <entry>
+                                    <orderReference>'.$bpost_id.'</orderReference>
+                                    <status>'.$status_arr[$order_status_id].'</status>
+                                  </entry>
+                                </orderStatusMap>';
+                        curl_setopt_array($ch,array (
+                            CURLOPT_SSL_VERIFYPEER=>false,				// Make sure to trust the HTTPS certificate.
+                            CURLOPT_HTTPAUTH=>CURLAUTH_BASIC,			// Use Basic Authentication.
+                            CURLOPT_TIMEOUT=>30,						// Maximum number of seconds to allow cURL functions to execute.
+                            CURLOPT_RETURNTRANSFER=>true,				// Return the output of the curl_exec() as a string, for display on screen in this example.
+                            CURLOPT_FAILONERROR=>true,					// So we can do our own error handling.
+                            CURLOPT_URL=>$webserviceUrl,
+                            CURLOPT_HTTPHEADER=>array('Content-type: application/vnd.bpost.shm-order-status-v2+XML', 'X-HTTP-Method-Override: PATCH', 'charset: UTF-8'),	// Set the correct HTTP header.
+                            CURLOPT_POSTFIELDS=>$data,
+                            CURLOPT_USERPWD=>'107413:DEMO_SHM'	// Username and Password used for basic authentication.
+
+                        ));
+                        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+                        curl_setopt($ch, CURLOPT_HEADER, true);
+                        $return = curl_exec($ch);
+                        if (curl_errno($ch)) {
+                            $result = 'ERROR -> ' . curl_errno($ch) . ': ' . curl_error($ch);
+                        }
+                        curl_close($ch);
+                    }
+                }
+
+
+                public function delete() {
+            ]]></add>
+        </operation>
+        <operation info="Replace the css property in heading title in Shipping method step">
+            <search position="replace"><![CDATA[
+                $this->model_checkout_order->addOrderHistory($order_id, $order_status_id);
+            ]]></search>
+            <add><![CDATA[
+                $this->model_checkout_order->addOrderHistory($order_id, $order_status_id);
+                $this->updateBpostOrder($order_id, $order_status_id);
+            ]]></add>
+        </operation>
+    </file>
+    
+    
+    
+    <file name="catalog/controller/checkout/checkout.php">
+        <operation info="Replace the css property in heading title in Shipping method step">
+            <search position="replace"><![CDATA[
+                $data['header'] = $this->load->controller('common/header');
+            ]]></search>
+            <add><![CDATA[
+                $data['header']      = $this->load->controller('common/header');
+                $data['total_price'] = number_format($this->cart->getTotal() * 100,0,'','');
+                $weight              = 0;
+                
+                foreach ($products as $k => $v) {
+                    switch ($v['weight_class_id']) {
+                        case 1:
+                            $weight += $v['weight'];
+                            break;
+                        case 2:
+                            $weight += $v['weight'] / 1000;
+                            break;
+                        case 5:
+                            $weight += $v['weight'] / 2.20462262;
+                            break;
+                        case 6:
+                            $weight += $v['weight'] / 35.2739619;
+                            break;    
+                    }
+                }
+                
+                $data['weight']           = $weight;
+                $data['bpost_account_id'] = '<input type="hidden" name="bpost_account_id" value="' . $this->config->get('bpost_account_id') . '" />';
+                $data['bpost_passphrase'] = '<input type="hidden" name="bpost_passphrase" value="' . $this->config->get('bpost_passphrase') . '" />';
+                
+                if ($data['logged']) {
+                    $cus                = $this->customer->session->data['shipping_address'];
+                    $data['first_name'] = $cus['firstname'];
+                    $data['last_name']  = $cus['lastname'];
+                    $data['company']    = $cus['company'];
+                    $data['address']    = $cus['address_1'];
+                    $data['city']       = $cus['city'];
+                    $data['email']      = $this->customer->getEmail();
+                    $data['phone']      = $this->customer->getTelephone();
+                } else {
+                    $data['first_name'] = $data['last_name'] = $data['company'] = $data['address'] = $data['city'] = $data['email'] = $data['phone'] = '';
+                }
+            ]]></add>
+        </operation>
+    </file>
+    
+    
+    
+    <file name="catalog/controller/checkout/shipping_method.php">
+        <operation info="Replace the css property in heading title in Shipping method step">
+            <search position="replace"><![CDATA[
+                class ControllerCheckoutShippingMethod extends Controller {
+            ]]></search>
+            <add><![CDATA[
+                class ControllerCheckoutShippingMethod extends Controller {
+                    public function update_ss() {
+                        $this->session->data['custom_bpost']                        = 1;
+                            $this->session->data['shipping_method']['cost']         = $_POST['shipping_fee'] / 100;
+                            $this->session->data['bpost_reference']                 = $_POST['reference'];
+                            $this->session->data['shipping_method']['tax_class_id'] = '';
+                            $this->session->data['shipping_method']['title']        = 'BPost';
+                    }
+
+            ]]></add>
+        </operation>
+        
+        <operation info="Replace the css property in heading title in Shipping method step">
+            <search position="replace"><![CDATA[
+                $this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
+            ]]></search>
+            <add><![CDATA[
+                if (isset($this->session->data['custom_bpost']) && $this->session->data['custom_bpost'] == 0) {
+                    $this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
+                } elseif (isset($this->session->data['custom_bpost']) && $this->session->data['custom_bpost'] == 1) {
+                    $this->session->data['custom_bpost'] = 0;
+                }
+            ]]></add>
+        </operation>
+    </file>
+    
+    
+    
+    <file name="catalog/model/checkout/order.php">
+        <operation info="Replace the css property in heading title in Shipping method step">
+            <search position="replace"><![CDATA[
+                public function addOrderHistory($order_id, $order_status_id, $comment = '', $notify = false) {
+            ]]></search>
+            <add><![CDATA[
+                public function getBpostOrder($order_id){
+                    $bpost_query = $this->db->query("SELECT bpost_id FROM `" . DB_PREFIX . "order_bpost_mapping` WHERE order_id = '" . (int)$order_id . "'");
+                    if ($bpost_query->num_rows) {
+                        $bpost_id = $bpost_query->row['bpost_id'];
+                    } else {
+                        $bpost_id = 0;
+                    }
+                    return $bpost_id;
+                }
+
+                public function addOrderHistory($order_id, $order_status_id, $comment = '', $notify = false) {
+            ]]></add>
+        </operation>
+        <operation info="Replace the css property in heading title in Shipping method step">
+            <search position="replace"><![CDATA[
+                $order_id = $this->db->getLastId();
+            ]]></search>
+            <add><![CDATA[
+                $order_id = $this->db->getLastId();
+                if($data['shipping_method'] == 'BPost')
+                    $this->db->query("INSERT INTO `" . DB_PREFIX . "order_bpost_mapping` SET order_id = '" . $this->db->escape($order_id) . "', bpost_id = '" . $this->session->data['bpost_reference'] . "'");
+            ]]></add>
+        </operation>
+    </file>
+    
+    
+    
+    <file name="catalog/view/theme/default/template/checkout/checkout.tpl">
+        <operation info="Replace the css property in heading title in Shipping method step">
+            <search position="replace"><![CDATA[
+                <?php echo $header; ?>
+            ]]></search>
+            <add><![CDATA[
+                <?php echo $header; ?>
+                <?php 
+                    echo '<input type="hidden" name="logged" value="' . $logged . '" />';
+                    echo '<input type="hidden" name="total_price" value="' . $total_price . '" />';
+                    echo '<input type="hidden" name="weight" value="' . $weight . '" />';
+                    
+                    echo '<input type="hidden" name="c_first_name" value="' . $first_name . '" />';
+                    echo '<input type="hidden" name="c_last_name" value="' . $last_name . '" />';
+                    echo '<input type="hidden" name="c_company" value="' . $company . '" />';
+                    echo '<input type="hidden" name="c_address" value="' . $address . '" />';
+                    echo '<input type="hidden" name="c_city" value="' . $city . '" />';
+                    echo '<input type="hidden" name="c_email" value="' . $email . '" />';
+                    echo '<input type="hidden" name="c_phone" value="' . $phone . '" />';
+                    
+                    if (isset($bpost_account_id)) echo $bpost_account_id;
+                    if (isset($bpost_passphrase)) echo $bpost_passphrase;
+                ?>
+            ]]></add>
+        </operation>
+    </file>
+    
+    
+    
+    <file name="catalog/view/theme/default/template/checkout/shipping_method.tpl">
+        <operation info="1">
+            <search position="top"><![CDATA[
+                <div class="radio">
+            ]]></search>
+            <add><![CDATA[
+                <div id="shippingManager" style="display: none;">
+                    <iframe width="800px" height="535px" style="border: none;" frameBorder="0" />
+                </div>
+                
+                <form name="returnForm" method="post" action="">
+                    <input type="hidden" name="orderTotalPrice" value=""/>
+    				<input type="hidden" name="deliveryMethodPriceTotal" value=""/>
+    			</form>
+            ]]></add>
+       </operation>
+       
+        <operation info="2">
+            <search position="replace"><![CDATA[
+                checked="checked"
+            ]]></search>
+            <add><![CDATA[
+                
+            ]]></add>
+        </operation>
+        
+        <operation info="3">
+            <search position="replace"><![CDATA[
+                value="<?php echo $quote['code']; ?>"
+            ]]></search>
+            <add><![CDATA[
+                value="<?php echo $quote['code']; ?>" <?php echo $quote['code'] == 'bpost.bpost' ? 'onClick="loadShippingManager();"' : ''; ?>
+            ]]></add>
+        </operation>
+        <operation info="3">
+            <search position="replace"><![CDATA[
+                <?php echo $quote['title']; ?> - <?php echo $quote['text']; ?></label>
+            ]]></search>
+            <add><![CDATA[
+                <?php echo $quote['title']; ?><?php if($quote['code'] != 'bpost.bpost'){ ?> - <?php echo $quote['text']; ?><?php } ?></label>
+            ]]></add>
+        </operation>
+    </file>
+    
+    
+    
+    <file name="catalog/view/theme/default/template/common/header.tpl">
+        <operation info="Replace the css property in heading title in Shipping method step">
+            <search position="replace"><![CDATA[
+                <script src="catalog/view/javascript/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+            ]]></search>
+            <add><![CDATA[
+                <script type="text/javascript" src="catalog/view/javascript/jquery/jquery-ui-1.8.17.custom.min.js"></script>
+                <script src="catalog/view/javascript/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+            ]]></add>
+        </operation>
+    </file>
+</modification>
