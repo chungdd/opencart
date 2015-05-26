@@ -30,6 +30,7 @@ function loadShippingManager() {
     params += '&bpost_account_id=' + get_input_value('bpost_account_id', 'name');
     params += '&bpost_passphrase=' + get_input_value('bpost_passphrase', 'name');
     params += '&weight=' + get_input_value('weight', 'name');
+    console.log(get_input_value('weight', 'name'));
     
 	$('#shippingManager').find('iframe').attr('src', 'index.php?route=checkout/bpost/load_shipping_manager' + params);
 	$('#result').remove();
@@ -71,6 +72,7 @@ function closeShippingManager(total_price, shipping_fee, order_id) {
 
             success: function() {
                 $("input[value='bpost.bpost']").parent().append(' - $' + (shipping_fee / 100));
+                $("input[value='bpost.bpost']").prop('checked', true);
             },
 
             error: function() {

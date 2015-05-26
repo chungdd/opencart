@@ -108,22 +108,22 @@
                 
                 foreach ($products as $k => $v) {
                     switch ($v['weight_class_id']) {
-                        case 1:
+                        case 1://kilograms
+                            $weight += $v['weight'] * 1000;
+                            break;
+                        case 2://grams
                             $weight += $v['weight'];
                             break;
-                        case 2:
-                            $weight += $v['weight'] / 1000;
+                        case 5://pounds
+                            $weight += $v['weight'] * 453.59237;
                             break;
-                        case 5:
-                            $weight += $v['weight'] / 2.20462262;
-                            break;
-                        case 6:
-                            $weight += $v['weight'] / 35.2739619;
+                        case 6://ounces
+                            $weight += $v['weight'] * 28.3495231;
                             break;    
                     }
                 }
                 
-                $data['weight']           = $weight;
+                $data['weight']           = number_format($weight, 0, '', '');
                 $data['bpost_account_id'] = '<input type="hidden" name="bpost_account_id" value="' . $this->config->get('bpost_account_id') . '" />';
                 $data['bpost_passphrase'] = '<input type="hidden" name="bpost_passphrase" value="' . $this->config->get('bpost_passphrase') . '" />';
                 

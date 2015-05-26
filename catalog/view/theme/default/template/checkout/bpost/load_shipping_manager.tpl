@@ -24,7 +24,7 @@
             <input type="hidden" name="orderTotalPrice" value="<?php echo $total_price; ?>" />
             <input type="hidden" name="customerFirstName" value="<?php echo $first_name; ?>"/>
             <input type="hidden" name="customerLastName" value="<?php echo $last_name; ?>" />
-            <input type="hidden" id="orderWeight" name="orderWeight" value="<?php echo $weight; ?>" />
+            <input type="hidden" id="orderWeight" name="orderWeight" value="4500" />
             <input type="hidden" id="confirmUrl" name="confirmUrl" value="<?php echo $return_url; ?>" />
             <input type="hidden" id="cancelUrl" name="cancelUrl" value="<?php echo $return_url; ?>" />
             <input type="hidden" name="customerCompany" value="<?php echo $company; ?>" />
