@@ -12,9 +12,8 @@
 	<body>
         <?php
             $order_reference = date('YmdHi', time());
-            $hash            = hash("sha256", "accountId=".$bpost_account_id."&action=START&customerCountry=BE&orderReference=".$order_reference."&orderWeight=4500&".$bpost_passphrase);
+            $hash            = hash("sha256", "accountId=".$bpost_account_id."&action=START&customerCountry=BE&orderReference=".$order_reference."&orderWeight=".$weight."&".$bpost_passphrase);
         ?>	
-			
         <form style="display: none" id="dataForm" method="POST" action="https://shippingmanager.bpost.be/ShmFrontEnd/start">
             <input type="submit" value="Confirm button Shipping Manager" />
             <input type="hidden" name="lang" value="EN" />
@@ -24,7 +23,7 @@
             <input type="hidden" name="orderTotalPrice" value="<?php echo $total_price; ?>" />
             <input type="hidden" name="customerFirstName" value="<?php echo $first_name; ?>"/>
             <input type="hidden" name="customerLastName" value="<?php echo $last_name; ?>" />
-            <input type="hidden" id="orderWeight" name="orderWeight" value="4500" />
+            <input type="hidden" id="orderWeight" name="orderWeight" value="<?php echo $weight; ?>" />
             <input type="hidden" id="confirmUrl" name="confirmUrl" value="<?php echo $return_url; ?>" />
             <input type="hidden" id="cancelUrl" name="cancelUrl" value="<?php echo $return_url; ?>" />
             <input type="hidden" name="customerCompany" value="<?php echo $company; ?>" />

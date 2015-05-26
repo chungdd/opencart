@@ -7,7 +7,7 @@ class ControllerCheckoutBpost extends Controller {
             'bpost_passphrase' => $this->config->get('bpost_passphrase'),
             'return_url'       => HTTP_SERVER . 'index.php?route=checkout/bpost/close_shipping_manager'
         );
-        
+        //echo '<pre>';print_r(array_merge($data, $get));exit();
         $this->response->setOutput($this->load->view('default/template/checkout/bpost/load_shipping_manager.tpl', array_merge($data, $get)));
 	}
     
